@@ -107,37 +107,6 @@ class PhpObfuscator_VariableObfuscator {
 
 
 
-	private function encode($tmp) {
-		if ($this->stripWhitespaces) $tmp = preg_replace('/[\n\t\s]+/', ' ', $tmp);
-		$tmp = preg_replace('/^\<\?(php)*/', '', $tmp);
-		$tmp = preg_replace('/\?\>$/', '', $tmp);
-		$tmp = str_replace(array('\"', '$', '"'), array('\\\"', '\$', '\"'), $tmp);
-		$tmp = trim($tmp);
-		if ($this->b64) {
-			$tmp = base64_encode("$tmp");
-			$tmp = "<?php \$code=base64_decode(\"$tmp\"); eval(\"return eval(\\\"\$code\\\");\") ?>\n";
-		} else $tmp = "<?php eval(eval(\"$tmp\")); ?>\n";
-		$this->code = $tmp;
-	}
-
-	private function encode_string($text) {
-		if (!$this->encodeString) {
-			return $text;
-		}
-		for ($i = 0; $i <= strlen($text) - 1; $i++) {
-			$chr = ord(substr($text, $i, 1));
-			if ($chr == 32 || $chr == 34 || $chr == 39) $tmp[] = chr($chr); // Space, leave it alone.
-			elseif ($chr == 92 && preg_match('/\\\(n|t|r|s)/', substr($text, $i, 2))) {
-				// New line, leave it alone, and add the next char with it.
-				$tmp[] = substr($text, $i, 2);
-				$i++; // Skip the next character.
-			}
-			else $tmp[] = '\x' . strtoupper(base_convert($chr, 10, 16));
-		}
-		if (!empty($tmp)) $text = implode('', $tmp);
-		return $text;
-	}
-
 	private function generateNewVariableName() {
 		return "\$_{$this->encoderService->getRandomString()}";
 	}
