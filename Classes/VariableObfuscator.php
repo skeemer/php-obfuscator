@@ -28,8 +28,12 @@ class PhpObfuscator_VariableObfuscator {
 	private $encoderService;
 
 
-	public function __construct(PhpObfuscator_EncoderService $encoderService) {
-		$this->encoderService = $encoderService;
+	public function __construct(PhpObfuscator_EncoderService $encoderService = null) {
+	  if( $encoderService == null ) {
+	    $this->encoderService = new PhpObfuscator_EncoderService();
+	  } else {
+  		$this->encoderService = $encoderService;
+	  }
 	}
 
 	public function renameAndRegisterMethod($name, $class, $accessScope) {

@@ -33,10 +33,14 @@ class PhpObfuscator_FileObfuscatorService {
 	 */
 	private $variableObfuscator;
 
-	public function __construct(PhpObfuscator_VariableObfuscator $variableObfuscator ) {
+	public function __construct(PhpObfuscator_VariableObfuscator $variableObfuscator = null) {
 		if (!defined('T_ML_COMMENT')) define('T_ML_COMMENT', T_COMMENT);
-		$this->encoderService = $variableObfuscator->getEncoderService();
-		$this->variableObfuscator = $variableObfuscator;
+	  if($variableObfuscator == null) {
+  		$this->variableObfuscator = new PhpObfuscator_VariableObfuscator();
+	  } else {
+  		$this->variableObfuscator = $variableObfuscator;
+	  }
+		$this->encoderService = $this->variableObfuscator->getEncoderService();
 		return $this;
 	}
 
