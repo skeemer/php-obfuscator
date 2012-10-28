@@ -30,7 +30,7 @@ class PhpObfuscator_EncoderService {
 		$tmp = trim($tmp);
 		if ($this->b64) {
 			$tmp = base64_encode("$tmp");
-			$tmp = "<?php \$code=base64_decode(\"$tmp\"); eval(\"return eval(\\\"\$code\\\");\") ?>\n";
+			$tmp = "<?php \$code=base64_decode(\"$tmp\"); eval(\"return eval(\\\"\$code\\\");\"); ?>\n";
 		} else $tmp = "<?php eval(eval(\"$tmp\")); ?>\n";
 		return $tmp;
 	}
