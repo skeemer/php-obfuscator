@@ -81,12 +81,12 @@ class PhpObfuscator_VariableObfuscator {
 			return "\${$this->encoderService->encodeString(substr($variableName,1))}";
 		}
 		if (!isset($this->renamedGlobalVariables[$variableName])) {
-			if ($this->renameGlobalVariables) {
-				$this->renamedGlobalVariables[$variableName] = $this->generateNewVariableName();
-			}
-			else {
+      // if ($this->renameGlobalVariables) {
+      //  $this->renamedGlobalVariables[$variableName] = $this->generateNewVariableName();
+      // }
+      // else {
 				$this->renamedGlobalVariables[$variableName] = "\${$this->encoderService->encodeString(substr($variableName,1))}";
-			}
+      // }
 		}
 		return $this->renamedGlobalVariables[$variableName];
 	}
