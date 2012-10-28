@@ -65,6 +65,12 @@ class PhpObfuscator_FileObfuscatorService {
 		$this->pack();
 		return $this->code;
 	}
+	
+	public function obfuscateCode($code) {
+	  $this->code($code);
+	  $this->pack();
+	  return $this->code;
+	}
 
 	protected function pack() {
 		if (empty($this->tokens)) return false;
